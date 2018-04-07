@@ -17,15 +17,13 @@ export class HeroService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-
   /** HeroServiceのメッセージをMessageServiceを使って記録 */
   private log(message: string) {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getHeroes(): Observable<Hero> {
-    this.messageService.add(`HeroService: fetched heros`);
-    return of(HEROES);
+  getHeroes (): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.heroesUrl)
   }
 
   getHero(id: number): Observable<Hero> {
