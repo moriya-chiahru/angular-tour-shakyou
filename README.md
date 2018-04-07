@@ -1,27 +1,37 @@
-# AngularTourOfHeroes
+# Angularのチュートリアルの写経
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.1.
+写経元
+[Angular - チュートリアル: ツアー・オブ・ヒーローズ](https://angular-ja.firebaseapp.com/tutorial)
 
-## Development server
+このコードはオリジナルで作ったものではなく、移したものです。
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 起動方法
 
-## Code scaffolding
+```
+ng serve --open
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## つまずいたところ
 
-## Build
+[8章](https://angular-ja.firebaseapp.com/tutorial/toh-pt6#%E3%83%92%E3%83%BC%E3%83%AD%E3%83%BC%E3%81%A8http)の下記のコードを実装したらエラーを505エラーを吐き、データが表示されない。
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```
+getHeroes (): Observable<Hero[]> {
+  return this.http.get<Hero[]>(this.heroesUrl)
+}
+```
 
-## Running unit tests
+### 原因
+angular-in-memory-web-api(インメモリWeb API)のバージョンが合わない為、古いバージョンを使えば良い。
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+参考サイト
+[javascript - angular-in-memory-web-api internal server error - Stack Overflow](https://stackoverflow.com/questions/49474048/angular-in-memory-web-api-internal-server-error)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+インストールし直し
+```
+npm install angular-in-memory-web-api@0.5.4 --save
+```
+package.jsonは下記の通りに書く。
+```
+"angular-in-memory-web-api": "~0.5.0",
+```
